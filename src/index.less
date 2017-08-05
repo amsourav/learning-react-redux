@@ -1,22 +1,113 @@
 @container-x-padding: 20px;
 @container-max-width: 971px;
+@container-min-width: 320px;
 @text-color: #ffffff;
+@fb-color: #3b5998;
+@twitter-color: #1dcaff;
+@whatsapp-color: #25d366;
 
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 
 .Container {
-  padding: 0 @container-x-padding;
-  width: @container-max-width;
-  margin: 0 auto;
-  height: 100%;
-  position: relative;
+	max-width: @container-max-width;
+	min-width: @container-min-width;
+	margin: 0 auto;
+	height: 100%;
+	position: relative;
+
+	@media (min-width: 320px) and (max-width: 475px) {
+		padding: 0 @container-x-padding;
+	}
 }
 
 a:link, a:visited {
 	text-decoration: none;
 	color: @text-color;
+}
+
+.Movies__Container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.Icon {
+	display: inline-block;
+	text-align: center;
+    width: 20px;
+    height: 20px;
+    padding: 2px;
+    margin: 3px;
+
+    &:first-child {
+    	margin-left: 0px;
+    }
+
+    &:last-child {
+    	margin-right: 0px;
+    }
+
+	&__Circular {
+		border-radius: 50%;
+	}
+
+	&__noPadding {
+		margin: 0 3px;
+		padding: 0px!important;
+	}
+}
+
+// POSITION
+.p {
+	&-absolute {
+		position: absolute;
+	}
+	&-topLeft {
+		top: 0;
+		left: 0
+	}
+	&-topRight {
+		top: 0;
+		right: 0;
+	}
+	&-bottomLeft {
+		bottom: 0;
+		left: 0;
+	}
+	&-bottomRight {
+		bottom: 0;
+		right: 0;
+	}
+}
+
+// UTILITY 
+
+.u {
+	&-text {
+		color: @text-color
+	}
+
+	&-color {
+		&-fb {
+			background-color: @fb-color;
+		}
+		&-twitter {
+			background-color: @twitter-color;
+		}
+		&-whatsapp {
+			background-color: @whatsapp-color;
+		}
+	}
+
+	&-cursor {
+		&-pointer {
+			cursor: pointer;
+		}
+		&-disabled {
+			pointer-events: none;
+		}
+	}
 }

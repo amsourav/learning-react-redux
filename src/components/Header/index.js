@@ -17,10 +17,10 @@ function Header() {
 					</div>
 					<div className="Header__right">
 						<Link className="Header__item" to="/">
-							<span className="">POPULAR</span>
+							<span className="u-text">POPULAR</span>
 						</Link>
 						<Link className="Header__item" to="/favorite">
-							<span className="">FAVORITE</span>
+							<span className="u-text">FAVORITE</span>
 						</Link>
 						<Link className="Header__item" to="/search">
 							<FontAwesome name='search' />
