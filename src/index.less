@@ -58,6 +58,11 @@ a:link, a:visited {
 		margin: 0 3px;
 		padding: 0px!important;
 	}
+
+    &__unsetWidth {
+    	width: unset;
+    }
+
 }
 
 // POSITION
@@ -86,6 +91,16 @@ a:link, a:visited {
 // UTILITY 
 
 .u {
+
+	&-padding {
+		&-6p-left {
+			padding-left: 6px;
+		}
+		&-6p-bottom {
+			padding-bottom: 6px;
+		}
+	}
+
 	&-text {
 		color: @text-color
 	}

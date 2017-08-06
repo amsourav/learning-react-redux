@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import './DummyApp.less';
 
 import MovieCard from '../MovieCard';
@@ -12,15 +11,19 @@ class App extends Component {
     this.state = {
       movieData: []
     }
+    this.persistDataToLocalStorage = this.persistDataToLocalStorage.bind(this);
+  }
+
+  persistDataToLocalStorage(result) {
+    this.setState({
+      movieData: result.results
+    })
   }
 
   componentDidMount() {
-
-    axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=f54c6cba706b27a69fb42891c0161325&language=en-US&page=1`).then((result) => {
-      this.setState({
-        movieData: result.data.results
-      })
-    })
+    fetch(`https://api.themoviedb.org/3/movie/popular?api_key=f54c6cba706b27a69fb42891c0161325&language=en-US&page=1`)
+      .then(response => response.json())
+      .then(result => this.persistDataToLocalStorage(result));
   }
 
   render() {
@@ -28,13 +31,9 @@ class App extends Component {
     let MovieCards = [];
 
     if (this.state.movieData) {
-      this.state.movieData.map((movie) => {
-        MovieCards.push(<MovieCard data={movie} />);
-        return;
-      });      
+      this.state.movieData.map((movie) => MovieCards.push(<MovieCard key={movie.id} data={movie} />));
     } else {
-        MovieCards.push(null);
-        return;
+      MovieCards.push(null);
     }
 
     return (
