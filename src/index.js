@@ -6,5 +6,31 @@ import './index.less';
 
 import App from './containers/App';
 
-ReactDOM.render(<Router><App /></Router>, document.getElementById('root'));
+import { createStore, combineReducers, applyMiddleware } from 'redux'
+import { Provider } from 'react-redux'
+import createHistory from 'history/createBrowserHistory';
+import { ConnectedRouter, routerReducer, routerMiddleware, push } from 'react-router-redux';
+
+
+const history = createHistory()
+const middleware = routerMiddleware(history)
+
+// Add the reducer to your store on the `router` key
+// Also apply our middleware for navigating
+const store = createStore(
+  combineReducers({
+    // ...reducers,
+    router: routerReducer
+  }),
+  applyMiddleware(middleware)
+)
+
+
+ReactDOM.render(<Provider store={store}>
+					<ConnectedRouter history={history}>
+						<Router>
+							<App />
+						</Router>
+					</ConnectedRouter>
+				</Provider>, document.getElementById('root'));
 registerServiceWorker();
