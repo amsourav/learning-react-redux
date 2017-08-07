@@ -6,6 +6,8 @@
 @twitter-color: #1dcaff;
 @whatsapp-color: #25d366;
 
+@import './react-select.less';
+
 body {
   margin: 0;
   padding: 0;
@@ -30,9 +32,25 @@ a:link, a:visited {
 }
 
 .Movies__Container {
-    display: flex;
-    flex-wrap: wrap;
+	overflow: auto;
 }
+
+.selectContainer {
+	font-size: 12px;
+	&> * {
+		display: inline-block;
+		margin: 10px;
+	}
+
+	.sortSelect {
+		width: 160px;
+	}
+
+	.yearSelect {
+		width: 80px;
+	}
+}
+
 
 .Icon {
 	display: inline-block;

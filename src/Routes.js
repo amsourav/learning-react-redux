@@ -2,9 +2,8 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import asyncComponent from './components/AsyncComponent';
+import DummyApp from './components/DummyApp';
 
-
-const DummyApp = asyncComponent(() => import('./components/DummyApp'))
 const Error = asyncComponent(() => import('./containers/Error'));
 
 
