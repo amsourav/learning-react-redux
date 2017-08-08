@@ -14,6 +14,8 @@ class App extends Component {
 
     this.state = {
       movieData: [],
+      filteredMovieData: [],
+      filteredView: false,
       sortSelectValue: {value: null, label: null},
       yearSelectValue: {value: null, label: null}
     }
@@ -57,16 +59,30 @@ class App extends Component {
     
     this.setState({
       sortSelectValue,
-      movieData: filteredMovieData
+      filteredMovieData: filteredMovieData,
+      filteredView: true
     })
   }
 
   logYearSelectChange(yearSelectValue) {
-    const filteredMovieData = this.state.movieData;
-    this.setState({
-      yearSelectValue,
-      movieData: filteredMovieData
-    })
+    let filteredMovieData;
+
+    if (yearSelectValue !== null) {
+      filteredMovieData = _.filter(this.state.movieData, function(o) {
+        let releaseDate = new Date(o.release_date)
+        return yearSelectValue.value === releaseDate.getFullYear()
+      })
+
+      this.setState({
+        yearSelectValue,
+        filteredMovieData: filteredMovieData,
+        filteredView: true
+      })
+    } else {
+      this.setState({
+        filteredView: false        
+      })
+    }
   }
 
   componentDidMount() {
@@ -87,16 +103,18 @@ class App extends Component {
     ];
 
     const optionYears = [
-      { value: 2011, label: '2011'},
-      { value: 2012, label: '2012'},
-      { value: 2013, label: '2013'},
-      { value: 2014, label: '2014'}
+      { value: 2014, label: '2014'},
+      { value: 2015, label: '2015'},
+      { value: 2016, label: '2016'},
+      { value: 2017, label: '2017'}
     ];
 
-    if (this.state.movieData) {
+    if (this.state.movieData && !this.state.filteredView) {
       this.state.movieData.map((movie) => MovieCards.push(<MovieCard key={movie.id} data={movie} />));
+    } else if (this.state.filteredMovieData && this.state.filteredView){
+      this.state.filteredMovieData.map((movie) => MovieCards.push(<MovieCard key={movie.id} data={movie} />));
     } else {
-      MovieCards.push(null);
+       MovieCards.push(null);
     }
 
     {window.store = store}
