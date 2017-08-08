@@ -1,17 +1,32 @@
-import React, { Component } from 'react';
-
+import React from 'react';
 import Routes from '../../Routes';
-import Header from '../../components/Header';
+import reducers from '../../reducers';
+import { combineReducers, createStore, compose, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import createHistory from 'history/createBrowserHistory';
+import { ConnectedRouter, routerReducer, routerMiddleware } from 'react-router-redux';
+import {createLogger} from 'redux-logger';
 
-class Root extends Component {
-  render() {
+const Root = () => {
+
+	const logger = createLogger();
+    const reducer = combineReducers({
+        reducers, // your reducers here
+        routing: routerReducer,
+    });
+    const history = createHistory();
+    const store = createStore(reducer, undefined, compose(
+        applyMiddleware(routerMiddleware(history)),
+        applyMiddleware(logger),
+        window.devToolsExtension ? window.devToolsExtension() : f => f,
+    ));
     return (
-      <div className="Root container">
-        <Header />
-        <Routes />
-      </div>
+        <Provider store={store}>
+            <ConnectedRouter history={history}>
+                <Routes />
+            </ConnectedRouter>
+        </Provider>
     );
-  }
-}
+};
 
 export default Root;

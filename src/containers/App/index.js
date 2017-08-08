@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.less';
 import MovieCard from '../../components/MovieCard';
 import _ from 'lodash';
+import {connect} from 'redux';
 
 class App extends Component {
 

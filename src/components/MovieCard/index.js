@@ -1,9 +1,10 @@
 import React from 'react';
 import FontAwesome from 'react-fontawesome';
-
+import {likeMovie, dislikeMovie} from '../../actions/movieActions';
 import './MovieCard.less';
 import Overlay from '../Overlay';
 import {releaseDateFormatted} from '../../utils/dateHelper';
+import {connect} from 'react-redux';
 
 class MovieCard extends React.Component {
 
@@ -14,6 +15,7 @@ class MovieCard extends React.Component {
 	}
 
 	markFavorite() {
+		this.props.plusOne();
 	}
 
 	getImageURL(imagePath) {
@@ -62,4 +64,15 @@ class MovieCard extends React.Component {
 	}
 }
 
-export default MovieCard;
+function mapDispatchToProps(dispatch) {
+  return {
+  	plusOne(e) {
+  		dispatch(e)
+  	},
+  	minusOne(e) {
+  		dispatch(e)
+  	}
+  };
+}
+
+export default connect(null, mapDispatchToProps, MovieCard);
