@@ -1,0 +1,2 @@
+export const LIKE_MOVIE = 'LIKE_MOVIE'
+export const DISLIKE_MOVIE = 'DISLIKE_MOVIE'

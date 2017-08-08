@@ -1,17 +1,19 @@
 import React from 'react';
 import FontAwesome from 'react-fontawesome';
-import LazyLoad from 'react-lazyload';
 
 import './MovieCard.less';
 import Overlay from '../Overlay';
-
+import {releaseDateFormatted} from '../../utils/dateHelper';
 
 class MovieCard extends React.Component {
 
 	constructor(props) {
 		super(props);
 		this.getImageURL = this.getImageURL.bind(this);
+		this.markFavorite = this.markFavorite.bind(this);
+	}
 
+	markFavorite() {
 	}
 
 	getImageURL(imagePath) {
@@ -19,42 +21,18 @@ class MovieCard extends React.Component {
 	}
 
 	render() {
-		const releaseDateHash = {
-			day: new Date(this.props.data.release_date).getDate(),
-			month: new Date(this.props.data.release_date).getMonth(),
-			year: new Date(this.props.data.release_date).getFullYear()
-		};
-
-		const monthShortCodeHash = {
-			0: 'Jan',
-			1: 'Feb',
-			2: 'Mar',
-			3: 'Apr',
-			4: 'May',
-			5: 'Jun',
-			6: 'Jul',
-			7: 'Aug',
-			8: 'Sep',
-			9: 'Oct',
-			10: 'Nov',
-			11: 'Dec' 
-		};
-
-		const releaseDateFormatted = `${releaseDateHash.day} ${monthShortCodeHash[releaseDateHash.month]} ${releaseDateHash.year}`
-
+		const heartIcon = this.props.data.favorite?<FontAwesome style={{color: "red"}} name="heart" />:<FontAwesome name="heart-o" />;
 		return (
 			<div key={this.props.data.id} className="MovieCard">
 				<div className="MovieCard__Poster">
-					<LazyLoad height={345}>
-						<img src={this.getImageURL(this.props.data.poster_path)} alt={this.props.data.title} />
-					</LazyLoad>
+					<img src={this.getImageURL(this.props.data.poster_path)} alt={this.props.data.title} />
 				</div>
 				<Overlay />
 				<div className="MovieCard__InnerContainer">
-					<div className="MovieCard__releaseDate p-absolute u-text p-topLeft">{releaseDateFormatted}</div>
+					<div className="MovieCard__releaseDate p-absolute u-text p-topLeft">{releaseDateFormatted(this.props.data.release_date)}</div>
 					<div className="MovieCard__userInteractionContainer p-absolute p-topRight">
-						<div className="Icon Icon__noPadding u-text">
-							<FontAwesome name="heart-o" />
+						<div className="Icon Icon__noPadding u-text" onClick={this.markFavorite}>
+							{heartIcon}
 						</div>
 						<div className="Icon Icon__noPadding u-text">
 							<FontAwesome name="comment" />
