@@ -1,22 +1,21 @@
 import { LIKE_MOVIE, DISLIKE_MOVIE } from '../constants/actionTypes';
+import _ from 'lodash';
 
-function userInteraction(state={}, action) {
+function userInteraction(initialState = {
+	favMovie: [],
+}, action) {
 	switch(action.type) {
 		case LIKE_MOVIE:
 			return {
-				favMovie: [1],
-				movieData: []
+				...initialState,
+				favMovie: [...initialState.favMovie, action.id]
 			};
 		case DISLIKE_MOVIE:
 			return {
 				favMovie: [0],
-				movieData: []
 			};
 		default:
-			return {
-				favMovie: [-1],
-				movieData: []				
-			};		
+			return initialState;	
 	}
 }
 

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.less';
 import MovieCard from '../../components/MovieCard';
 import _ from 'lodash';
-import {connect} from 'redux';
+import {connect} from 'react-redux';
 
 class App extends Component {
 
@@ -24,6 +24,8 @@ class App extends Component {
   		}
   	});
 
+    this.props.plusOne();
+    
     this.setState({
       movieData,
       userMarkedFav: []
@@ -54,4 +56,22 @@ class App extends Component {
   }
 }
 
-export default App;
+function mapStateToProps(state, ownProps) {
+  console.log(ownProps);
+  return {
+    ...state
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    plusOne() {
+      dispatch({type: 'LIKE_MOVIE'})
+    },
+    minusOne() {
+      dispatch({type: 'DISLIKE_MOVIE'})
+    }
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

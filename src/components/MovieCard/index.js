@@ -6,16 +6,23 @@ import Overlay from '../Overlay';
 import {releaseDateFormatted} from '../../utils/dateHelper';
 import {connect} from 'react-redux';
 
+
 class MovieCard extends React.Component {
 
 	constructor(props) {
 		super(props);
 		this.getImageURL = this.getImageURL.bind(this);
 		this.markFavorite = this.markFavorite.bind(this);
+		this.state = {
+			movieLiked: []
+		}
 	}
 
 	markFavorite() {
-		this.props.plusOne();
+		this.props.thumbsUp(this.props.data.id)
+		this.setState(prevState => {
+			movieLiked : [...prevState.movieLiked, this.props.data.id]
+		})
 	}
 
 	getImageURL(imagePath) {
@@ -64,15 +71,20 @@ class MovieCard extends React.Component {
 	}
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-  	plusOne(e) {
-  		dispatch(e)
-  	},
-  	minusOne(e) {
-  		dispatch(e)
-  	}
-  };
+function mapStateToProps(ownProps, state) {
+	console.log(state)
+	console.log(ownProps)
 }
 
-export default connect(null, mapDispatchToProps, MovieCard);
+function mapDispatchToProps(dispatch) {
+	return {
+		thumbsUp(id) {
+			dispatch({type: 'LIKE_MOVIE', id})
+		},
+		thumbsDown() {
+			dispatch(dislikeMovie(1))
+		}
+	}
+}
+
+export default connect(null, mapDispatchToProps)(MovieCard);

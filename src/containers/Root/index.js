@@ -6,6 +6,8 @@ import { Provider } from 'react-redux';
 import createHistory from 'history/createBrowserHistory';
 import { ConnectedRouter, routerReducer, routerMiddleware } from 'react-router-redux';
 import {createLogger} from 'redux-logger';
+import persistState from 'redux-localstorage'
+import DevTools from '../DevTools';
 
 const Root = () => {
 
@@ -18,7 +20,8 @@ const Root = () => {
     const store = createStore(reducer, undefined, compose(
         applyMiddleware(routerMiddleware(history)),
         applyMiddleware(logger),
-        window.devToolsExtension ? window.devToolsExtension() : f => f,
+        persistState(),
+        DevTools.instrument(),
     ));
     return (
         <Provider store={store}>
